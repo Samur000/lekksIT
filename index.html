@@ -615,35 +615,139 @@
 			}
 
 			@media (max-width: 768px) {
+
+				/* Стили для мобильного меню */
+				/* nav ul {
+					position: absolute;
+					top: 0;
+					right: -100%;
+					top: 40px;
+					width: 100%;
+					height: calc(100vh - 40px);
+					background-color: white;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					padding: 80px 20px 20px;
+					margin: 0;
+					transition: right 0.3s ease-in-out;
+					z-index: 98;
+					overflow-y: auto;
+				} */
+
 				nav ul {
-					display: none;
+					position: absolute;
+					top: 0;
+					right: -100%;
+					top: 40px;
+					width: 100%;
+					height: calc(100vh - 40px);
+					background-color: white;
+					flex-direction: column;
+					align-items: center;
+					justify-content: flex-start;
+					padding: 20px;
+					margin: 0;
+					transition: right 0.4s ease-in;
+					z-index: 98;
+					overflow-y: auto;
 				}
 
-				.mobile-menu-btn {
+				nav ul.active {
+					right: 0;
+				}
+
+				nav ul li {
+					margin: 15px 0;
+					width: 100%;
+					text-align: center;
+					opacity: 0;
+					transform: translateX(20px);
+					transition: all 0.3s ease;
+				}
+
+				nav ul.active li {
+					opacity: 1;
+					transform: translateX(0);
+					transition-delay: calc(0.1s * var(--i));
+				}
+
+				nav ul li a {
 					display: block;
+					padding: 12px 0;
+					font-size: 18px;
+					font-weight: 600;
 				}
 
-				.hero h1 {
-					font-size: 36px;
-				}
-
-				.hero-buttons {
+				/* Стили для кнопки бургера */
+				.mobile-menu-btn {
 					display: flex;
 					flex-direction: column;
+					justify-content: space-between;
+					width: 30px;
+					height: 24px;
+					background: none;
+					border: none;
+					cursor: pointer;
+					padding: 0;
+					z-index: 99;
+					position: relative;
+					margin-left: auto;
 				}
 
-				.btn {
-					margin-bottom: 15px;
-					margin-left: 0 !important;
-					text-align: center;
+				.mobile-menu-btn span {
+					display: block;
+					width: 100%;
+					height: 3px;
+					border-radius: 10px;
+					background-color: var(--primary);
+					transition: all 0.3s ease;
+					transform-origin: center;
 				}
 
-				.section {
-					padding: 70px 0;
+				.mobile-menu-btn.active span:nth-child(1) {
+					transform: translateY(10px) rotate(45deg);
 				}
 
-				.section-title h2 {
-					font-size: 30px;
+				.mobile-menu-btn.active span:nth-child(2) {
+					opacity: 0;
+				}
+
+				.mobile-menu-btn.active span:nth-child(3) {
+					transform: translateY(-10px) rotate(-45deg);
+				}
+
+				/* Затемнение фона */
+				.menu-overlay {
+					position: fixed;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					background-color: rgba(0, 0, 0, 0.5);
+					z-index: 97;
+					opacity: 0;
+					visibility: hidden;
+					transition: all 0.3s ease;
+				}
+
+				.menu-overlay.active {
+					opacity: 1;
+					visibility: visible;
+				}
+
+				/* Блокировка скролла */
+				body.menu-open {
+					overflow: hidden;
+				}
+
+				/* Корректировка хедера */
+				header {
+					padding: 15px 0;
+				}
+
+				.header-container {
+					position: relative;
 				}
 			}
 		</style>
@@ -654,7 +758,11 @@
 		<header id="header">
 			<div class="container header-container">
 				<a href="#" class="logo">Lekks<span>IT</span></a>
-				<button class="mobile-menu-btn">☰</button>
+				<button class="mobile-menu-btn">
+					<span></span>
+					<span></span>
+					<span></span>
+				</button>
 				<nav>
 					<ul>
 						<li><a href="#services">Услуги</a></li>
@@ -961,6 +1069,7 @@
 
 		<!-- Scripts -->
 		<script>
+
 			// Header scroll effect
 			window.addEventListener('scroll', function () {
 				const header = document.getElementById('header');
@@ -969,24 +1078,6 @@
 				} else {
 					header.classList.remove('scrolled');
 				}
-			});
-
-			// Mobile menu toggle
-			const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-			const nav = document.querySelector('nav ul');
-
-			mobileMenuBtn.addEventListener('click', function () {
-				nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-			});
-
-			// Close mobile menu when clicking on a link
-			const navLinks = document.querySelectorAll('nav ul li a');
-			navLinks.forEach(link => {
-				link.addEventListener('click', function () {
-					if (window.innerWidth <= 768) {
-						nav.style.display = 'none';
-					}
-				});
 			});
 
 			// Animation on scroll
@@ -1022,6 +1113,70 @@
 						});
 					}
 				});
+			});
+			// Обновленный JavaScript
+			const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+			const nav = document.querySelector('nav ul');
+			const menuOverlay = document.querySelector('.menu-overlay');
+			const html = document.documentElement;
+
+			// Добавляем индексы для анимации пунктов меню
+			document.querySelectorAll('nav ul li').forEach((li, index) => {
+				li.style.setProperty('--i', index);
+			});
+
+			// Функция открытия/закрытия меню
+			function toggleMenu() {
+				mobileMenuBtn.classList.toggle('active');
+				nav.classList.toggle('active');
+				menuOverlay.classList.toggle('active');
+				html.classList.toggle('menu-open'); // Изменено с body на html
+			}
+
+			// Функция закрытия меню
+			function closeMenu() {
+				mobileMenuBtn.classList.remove('active');
+				nav.classList.remove('active');
+				menuOverlay.classList.remove('active');
+				html.classList.remove('menu-open'); // Изменено с body на html
+			}
+
+			// Обработчик клика по кнопке меню
+			mobileMenuBtn.addEventListener('click', toggleMenu);
+
+			// Закрытие меню при клике на overlay
+			menuOverlay.addEventListener('click', closeMenu);
+
+			// Закрытие меню при клике на ссылку
+			document.querySelectorAll('nav ul li a').forEach(link => {
+				link.addEventListener('click', function (e) {
+					// Всегда закрываем меню
+					closeMenu();
+
+					// Для якорных ссылок добавляем плавный скролл
+					if (this.getAttribute('href').startsWith('#')) {
+						e.preventDefault();
+						const targetId = this.getAttribute('href');
+						if (targetId !== '#') {
+							setTimeout(() => {
+								const targetElement = document.querySelector(targetId);
+								if (targetElement) {
+									window.scrollTo({
+										top: targetElement.offsetTop - 80,
+										behavior: 'smooth'
+									});
+								}
+							}, 300);
+						}
+					}
+				});
+			});
+
+			// Закрытие меню при ресайзе
+			window.addEventListener('resize', function () {
+				if (window.innerWidth > 768) {
+					closeMenu();
+				}
 			});
 		</script>
 	</body>
