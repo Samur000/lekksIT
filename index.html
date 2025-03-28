@@ -111,6 +111,7 @@
 			}
 
 			.hero-content {
+				position: relative;
 				max-width: 600px;
 				z-index: 2;
 			}
@@ -137,7 +138,7 @@
 				font-weight: 600;
 				transition: all 0.3s ease;
 				border: 2px solid var(--primary);
-				background-color: white;
+				background-color: rgba(255, 255, 255, 0);
 				color: var(--primary);
 			}
 
@@ -160,7 +161,7 @@
 			.hero-shapes {
 				position: absolute;
 				top: 0;
-				right: 0;
+				right: 70px;
 				width: 50%;
 				height: 100%;
 				z-index: 1;
@@ -622,6 +623,12 @@
 					height: 100%;
 				}
 
+				html.menu-open {
+					position: fixed;
+					width: 100%;
+					overflow: hidden;
+				}
+
 				nav ul {
 					position: absolute;
 					top: 80px;
@@ -709,8 +716,6 @@
 					position: fixed;
 					top: 0;
 					left: 0;
-					width: 100%;
-					height: 100%;
 					background-color: rgba(0, 0, 0, 0.5);
 					z-index: 97;
 					opacity: 0;
@@ -735,6 +740,137 @@
 
 				.header-container {
 					position: relative;
+				}
+			}
+
+			@media (max-width: 450px) {
+
+				/* Общие корректировки */
+				.container {
+					padding: 0 15px;
+				}
+
+				/* Хедер */
+				header {
+					padding: 15px 0;
+				}
+
+				.logo {
+					font-size: 20px;
+				}
+
+				/* Герой-секция */
+				.hero {
+					padding-top: 70px;
+					height: auto;
+					min-height: 100vh;
+				}
+
+				.hero h1 {
+					font-size: 28px;
+					margin-bottom: 15px;
+				}
+
+				.hero p {
+					font-size: 16px;
+					margin-bottom: 20px;
+				}
+
+				.hero-buttons {
+					flex-direction: column;
+				}
+
+				.btn,
+				.btn-accent {
+					width: 100%;
+					margin-left: 0;
+					margin-bottom: 10px;
+					text-align: center;
+				}
+
+				.hero-shapes {
+					right: 0;
+				}
+
+				/* Секции */
+				.section {
+					padding: 60px 0;
+				}
+
+				.section-title h2 {
+					font-size: 26px;
+				}
+
+				.section-title p {
+					font-size: 14px;
+				}
+
+				/* Карточки услуг */
+				.services-grid {
+					grid-template-columns: 1fr;
+					gap: 20px;
+				}
+
+				.service-card {
+					padding: 20px;
+				}
+
+				/* О нас */
+				.about-content {
+					padding-right: 0;
+				}
+
+				.about-image {
+					margin-top: 30px;
+				}
+
+				/* Кейсы */
+				.cases-grid {
+					grid-template-columns: 1fr;
+				}
+
+				.case-image {
+					height: 180px;
+				}
+
+				/* Контакты */
+				.contact-container {
+					flex-direction: column;
+					gap: 30px;
+				}
+
+				.contact-form {
+					padding: 20px;
+				}
+
+				/* Футер */
+				.footer-container {
+					grid-template-columns: 1fr;
+					gap: 20px;
+				}
+
+				/* Мобильное меню */
+				nav ul {
+					top: 70px;
+					height: calc(100vh - 70px);
+					padding: 15px;
+				}
+
+				nav ul li a {
+					font-size: 16px;
+					padding: 10px 0;
+				}
+
+				/* Формы */
+				.form-group input,
+				.form-group textarea {
+					padding: 10px 12px;
+				}
+
+				/* Мелкие тексты */
+				.case-tag {
+					font-size: 10px;
+					padding: 3px 6px;
 				}
 			}
 		</style>
@@ -798,28 +934,30 @@
 				<div class="services-grid">
 					<div class="service-card animate-on-scroll">
 						<svg class="service-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-							<path
-								d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-							<path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" />
-						</svg>
+							<path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8h16v10z"/>
+							<path d="M8 15l3-3-3-3m5 6h3" fill="none" stroke="#4A6FA5" stroke-width="2"/>
+						 </svg>
 						<h3>Веб-разработка</h3>
 						<p>Создание современных веб-приложений и сайтов с уникальным дизайном и высокой производительностью.
 						</p>
 					</div>
 					<div class="service-card animate-on-scroll" style="transition-delay: 0.2s">
 						<svg class="service-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-							<path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5 3.87" />
-							<path d="M8 21h8m-4-4v4m-4-8h.01M16 16h.01" />
-						</svg>
+							<rect x="4" y="4" width="7" height="16" rx="1" fill="none" stroke="#4A6FA5" stroke-width="2"/>
+							<rect x="13" y="4" width="7" height="16" rx="1" fill="none" stroke="#4A6FA5" stroke-width="2"/>
+							<path d="M8 8h3m-3 4h3m-3 4h3m3-8h3m-3 4h3m-3 4h3" stroke="#4A6FA5" stroke-width="2" stroke-linecap="round"/>
+						 </svg>
 						<h3>Мобильные приложения</h3>
 						<p>Разработка кроссплатформенных мобильных приложений для iOS и Android с нативным пользовательским
 							опытом.</p>
 					</div>
 					<div class="service-card animate-on-scroll" style="transition-delay: 0.4s">
 						<svg class="service-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-							<path d="M18 6L6 18M6 6l12 12" />
-							<circle cx="12" cy="12" r="10" />
-						</svg>
+							<rect x="3" y="3" width="18" height="18" rx="1" fill="none" stroke="#FF7E5F" stroke-width="2"/>
+							<rect x="6" y="6" width="6" height="6" fill="none" stroke="#FF7E5F" stroke-width="1.5"/>
+							<rect x="6" y="14" width="6" height="4" fill="none" stroke="#FF7E5F" stroke-width="1.5"/>
+							<rect x="14" y="6" width="4" height="12" fill="none" stroke="#FF7E5F" stroke-width="1.5"/>
+						 </svg>
 						<h3>UI/UX дизайн</h3>
 						<p>Проектирование интуитивно понятных интерфейсов, которые повышают вовлеченность пользователей.</p>
 					</div>
@@ -1055,6 +1193,7 @@
 		</footer>
 		<div class="menu-overlay"></div>
 		<!-- Scripts -->
+
 		<script>
 
 			// Header scroll effect
@@ -1107,39 +1246,56 @@
 			const nav = document.querySelector('nav ul');
 			const menuOverlay = document.querySelector('.menu-overlay');
 			const html = document.documentElement;
-
-			// Добавляем индексы для анимации пунктов меню
-			document.querySelectorAll('nav ul li').forEach((li, index) => {
-				li.style.setProperty('--i', index);
-			});
+			let scrollPosition = 0;
 
 			// Функция переключения меню
 			function toggleMenu() {
-				mobileMenuBtn.classList.toggle('active');
-				nav.classList.toggle('active');
-				menuOverlay.classList.toggle('active');
-				html.classList.toggle('menu-open');
+				if (html.classList.contains('menu-open')) {
+					closeMenu();
+				} else {
+					openMenu();
+				}
+			}
+
+			// Функция открытия меню
+			function openMenu() {
+				// Сохраняем текущую позицию скролла
+				scrollPosition = window.pageYOffset;
+
+				// Блокируем скролл и фиксируем позицию
+				html.classList.add('menu-open');
+				html.style.top = `-${scrollPosition}px`;
+
+				// Открываем меню
+				mobileMenuBtn.classList.add('active');
+				nav.classList.add('active');
+				menuOverlay.classList.add('active');
 			}
 
 			// Функция закрытия меню
 			function closeMenu() {
+				// Разблокируем скролл и восстанавливаем позицию
+				html.classList.remove('menu-open');
+				window.scrollTo(0, scrollPosition);
+				html.style.top = '';
+
+				// Закрываем меню
 				mobileMenuBtn.classList.remove('active');
 				nav.classList.remove('active');
 				menuOverlay.classList.remove('active');
-				html.classList.remove('menu-open');
 			}
 
-			// Обработчики событий
+			// Остальной код обработчиков оставляем без изменений
+			document.querySelectorAll('nav ul li').forEach((li, index) => {
+				li.style.setProperty('--i', index);
+			});
+
 			mobileMenuBtn.addEventListener('click', toggleMenu);
 			menuOverlay.addEventListener('click', closeMenu);
 
-			// Закрытие меню при клике на ссылки
 			document.querySelectorAll('nav ul li a').forEach(link => {
 				link.addEventListener('click', function (e) {
-					// Закрываем меню
 					closeMenu();
-
-					// Для якорных ссылок добавляем плавный скролл
 					if (this.getAttribute('href').startsWith('#')) {
 						e.preventDefault();
 						const targetId = this.getAttribute('href');
@@ -1158,7 +1314,6 @@
 				});
 			});
 
-			// Закрытие меню при ресайзе
 			window.addEventListener('resize', function () {
 				if (window.innerWidth > 768) {
 					closeMenu();
